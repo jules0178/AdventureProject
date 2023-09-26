@@ -7,6 +7,7 @@ public class Adventure {
         Room room3 = new Room("Room 3");
         Room room4 = new Room("Room 4");
         Room room5 = new Room("Room 5");
+        room5.setDescription("A glorious room filled with treasure and wonders beyond imagination");
         Room room6 = new Room("Room 6");
         Room room7 = new Room("Room 7");
         Room room8 = new Room("Room 8");
@@ -45,43 +46,39 @@ public Room getCurrentRoom(){
 }
     public void goDirection(char direction) {
         switch (direction) {
-            case 'n':
+            case 'n' -> {
                 if (currentRoom.getNorth() != null) {
                     currentRoom = currentRoom.getNorth();
                     System.out.println("You are now in: " + currentRoom.toString());
                 } else {
                     System.out.println("You cannot go north from here.");
                 }
-                break;
-            case 's':
+            }
+            case 's' -> {
                 if (currentRoom.getSouth() != null) {
                     currentRoom = currentRoom.getSouth();
                     System.out.println("You are now in: " + currentRoom.toString());
                 } else {
                     System.out.println("You cannot go south from here.");
                 }
-                break;
-            case 'w':
+            }
+            case 'w' -> {
                 if (currentRoom.getWest() != null) {
                     currentRoom = currentRoom.getWest();
                     System.out.println("You are now in: " + currentRoom.toString());
                 } else {
                     System.out.println("You cannot go west from here.");
                 }
-                break;
-            case 'e':
+            }
+            case 'e' -> {
                 if (currentRoom.getEast() != null) {
                     currentRoom = currentRoom.getEast();
                     System.out.println("You are now in: " + currentRoom.toString());
                 } else {
                     System.out.println("You cannot go east from here.");
                 }
-                break;
-            default: {
-                System.out.println("Invalid Direction. Please try again with another.");
-                break;
             }
-
+            default -> System.out.println("Invalid Direction. Please try again with another.");
         }
     }
 }

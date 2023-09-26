@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class UserInterface {
     Scanner keyboard = new Scanner(System.in);
-    Adventure adv = new Adventure();
+    Adventure adventure = new Adventure();
 
     public void start() {
         System.out.println("""
@@ -22,13 +22,13 @@ public class UserInterface {
                     String[] parts = choice.split(" "); // Split the choice by space
                     if (parts.length > 1) {
                         char direction = parts[1].charAt(0);
-                        adv.goDirection(direction);
+                        adventure.goDirection(direction);
                     }
                 } else {
                     switch (choice) {
                         case "start" -> {
                             System.out.println("Program starting.....");
-                            System.out.println(adv.getCurrentRoom().toString());
+                            System.out.println(adventure.getCurrentRoom().toString());
                         }
                         case "help" -> displayHelp();
                         case "look" -> lookAround();
@@ -54,7 +54,7 @@ public class UserInterface {
             System.out.println("5. 'Exit' - Exits the game.");
         }
     private void lookAround() {
-        Room currentRoom = adv.getCurrentRoom();
+        Room currentRoom = adventure.getCurrentRoom();
         System.out.println("You are in: " + currentRoom.toString());
         System.out.println("You can go: " + currentRoom.availableDirections());
     }
