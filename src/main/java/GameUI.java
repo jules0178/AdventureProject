@@ -1,8 +1,9 @@
 import java.util.Scanner;
 
-public class UserInterface {
+public class GameUI {
     Scanner keyboard = new Scanner(System.in);
-    Adventure adventure = new Adventure();
+    GameInitializer gameInitializer = new GameInitializer();
+    PlayerNavigation playerNavigation = new PlayerNavigation(new MapCreator().buildMap());
 
     public void start() {
         System.out.println("""
@@ -16,23 +17,24 @@ public class UserInterface {
 
         while (true) {
             try {
-                String choice = keyboard.nextLine().toLowerCase().trim(); // Convert input to lowercase and trim spaces
+                String choice = keyboard.nextLine().toLowerCase().trim();
 
                 if (choice.startsWith("go ")) {
-                    String[] parts = choice.split(" "); // Split the choice by space
+                    String[] parts = choice.split(" ");
                     if (parts.length > 1) {
                         char direction = parts[1].charAt(0);
-                        adventure.goDirection(direction);
+                        String moveResult = playerNavigation.goDirection(String.valueOf(direction));
+                        System.out.println(moveResult);
                     }
                 } else {
                     switch (choice) {
-                        case "start" -> {
+                        case "start", "begin" -> {
                             System.out.println("Program starting.....");
-                            System.out.println(adventure.getCurrentRoom().toString());
+                            System.out.println(gameInitializer.getCurrentRoom().toString());
                         }
-                        case "help" -> displayHelp();
-                        case "look" -> lookAround();
-                        case "exit" -> {
+                        case "help", "info" -> displayHelp();
+                        case "look", "observe" -> lookAround();
+                        case "exit", "bye", "quit" -> {
                             System.out.println("Exiting Program -------- ");
                             System.exit(0);
                         }
@@ -40,7 +42,7 @@ public class UserInterface {
                     }
                 }
             } catch (Exception e) {
-                throw new RuntimeException(e);
+                System.out.println("An error occurred: " + e.getMessage());
             }
         }
     }
@@ -54,7 +56,7 @@ public class UserInterface {
             System.out.println("5. 'Exit' - Exits the game.");
         }
     private void lookAround() {
-        Room currentRoom = adventure.getCurrentRoom();
+        Room currentRoom = gameInitializer.getCurrentRoom();
         System.out.println("You are in: " + currentRoom.toString());
         System.out.println("You can go: " + currentRoom.availableDirections());
     }

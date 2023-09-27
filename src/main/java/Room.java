@@ -14,8 +14,8 @@ public class Room {
     }
 
     private String generateRandomDescription() {
-        String[] adjectives = {"dark", "spooky", "bright", "airy", "moist", "mysterious"};
-        String[] furnishings = {"with an old wooden chair", "with a broken table", "with a flickering lantern", "with a tattered rug"};
+        String[] adjectives = {"dark", "spooky", "bright", "airy", "moist", "mysterious", "silent", "echoing", "ornate", "simple"};
+        String[] furnishings = {"with an old wooden chair", "with a broken table", "with a flickering lantern", "with a tattered rug", "with a dusty bookshelf", "with a hidden compartment", "with a grand fireplace", "with a mysterious painting"};
 
         Random random = new Random();
 
