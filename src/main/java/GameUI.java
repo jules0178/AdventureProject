@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class GameUI {
     Scanner keyboard = new Scanner(System.in);
@@ -34,6 +35,9 @@ public class GameUI {
                         }
                         case "help", "info" -> displayHelp();
                         case "look", "observe" -> lookAround();
+                        case "inventory" -> showInventory();
+                        case "pick up" -> pickupItems();
+                        case "drop" -> dropItems();
                         case "exit", "bye", "quit" -> {
                             System.out.println("Exiting Program -------- ");
                             System.exit(0);
@@ -49,16 +53,64 @@ public class GameUI {
 
     private void displayHelp() {
         System.out.println("Here are some helpful instructions:");
-        System.out.println("1. 'Start' - Starts the game.");
-        System.out.println("2. 'Help' - Displays this help menu.");
-        System.out.println("3. 'Look' - Shows details about the current room.");
-        System.out.println("4. 'Go + [Direction]' - Moves you in the specified direction. Valid directions are N, S, E, W.");
-        System.out.println("5. 'Exit' - Exits the game.");
+        System.out.println("'Start' - Starts the game.");
+        System.out.println("'Help' - Displays this help menu.");
+        System.out.println("'Look' - Shows details about the current room.");
+        System.out.println("'Handle' - Pick up or drop items");
+        System.out.println("'Inventory' - Show inventory");
+        System.out.println("'Pick up' - Pick up items");
+        System.out.println("'Drop' - Drop items");
+        System.out.println("'Go + [Direction]' - Moves you in the specified direction. Valid directions are N, S, E, W.");
+        System.out.println("'Exit' - Exits the game.");
     }
 
     private void lookAround() {
-        Room currentRoom = gameInitializer.getCurrentRoom();
+        Room currentRoom = playerNavigation.getCurrentRoom(); // Change this line
         System.out.println("You are in: " + currentRoom.toString());
         System.out.println("You can go: " + currentRoom.availableDirections());
+
+        ArrayList<Item> itemsInRoom = currentRoom.getItems();
+
+        if (!itemsInRoom.isEmpty()) {
+            System.out.println("Items in this room:");
+            for (Item item : itemsInRoom) {
+                System.out.println("- " + item.getItemName());
+            }
+        } else {
+            System.out.println("There are no items in this room.");
+        }
+    }
+
+    private void dropItems() {
+        System.out.print("Enter the name of the item you want to drop: ");
+        String itemName = keyboard.nextLine().trim();
+        boolean success = playerNavigation.dropItem(itemName);
+        if (success) {
+            System.out.println(itemName + " has been dropped.");
+        } else {
+            System.out.println("Could not drop " + itemName);
+        }
+    }
+
+    private void pickupItems() {
+        System.out.print("Enter the name of the item you want to pick up: ");
+        String itemName = keyboard.nextLine().trim();
+        boolean success = playerNavigation.pickUpItem(itemName);
+        if (success) {
+            System.out.println(itemName + " has been picked up.");
+        } else {
+            System.out.println("Item not found in the room.");
+        }
+    }
+    private void showInventory() {
+        ArrayList<Item> inventory = playerNavigation.getInventory();
+        if (!inventory.isEmpty()) {
+            System.out.println("Inventory:");
+            for (Item item : inventory) {
+                System.out.println("- " + item.getItemName());
+            }
+        } else {
+            System.out.println("Inventory is empty.");
+        }
     }
 }
