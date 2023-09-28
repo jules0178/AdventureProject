@@ -6,8 +6,8 @@ public class GameInitializer {
         currentRoom = gameMapCreator.buildMap();
     }
 
-    public Room getCurrentRoom(){
+    public Room getCurrentRoom() {
         return currentRoom;
-}
+    }
 
 }

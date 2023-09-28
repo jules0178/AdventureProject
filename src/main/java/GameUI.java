@@ -7,13 +7,13 @@ public class GameUI {
 
     public void start() {
         System.out.println("""
-            Welcome to Adventure game. Please type:
-            Start
-            Help
-            Look
-            Go + Direction
-            Exit
-            """);
+                Welcome to Adventure game. Please type:
+                Start
+                Help
+                Look
+                Go + Direction
+                Exit
+                """);
 
         while (true) {
             try {
@@ -47,14 +47,15 @@ public class GameUI {
         }
     }
 
-        private void displayHelp() {
-            System.out.println("Here are some helpful instructions:");
-            System.out.println("1. 'Start' - Starts the game.");
-            System.out.println("2. 'Help' - Displays this help menu.");
-            System.out.println("3. 'Look' - Shows details about the current room.");
-            System.out.println("4. 'Go + [Direction]' - Moves you in the specified direction. Valid directions are N, S, E, W.");
-            System.out.println("5. 'Exit' - Exits the game.");
-        }
+    private void displayHelp() {
+        System.out.println("Here are some helpful instructions:");
+        System.out.println("1. 'Start' - Starts the game.");
+        System.out.println("2. 'Help' - Displays this help menu.");
+        System.out.println("3. 'Look' - Shows details about the current room.");
+        System.out.println("4. 'Go + [Direction]' - Moves you in the specified direction. Valid directions are N, S, E, W.");
+        System.out.println("5. 'Exit' - Exits the game.");
+    }
+
     private void lookAround() {
         Room currentRoom = gameInitializer.getCurrentRoom();
         System.out.println("You are in: " + currentRoom.toString());

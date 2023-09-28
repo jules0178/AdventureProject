@@ -12,6 +12,7 @@ public class PlayerNavigation {
     public void setCurrentRoom(Room room) {
         this.currentRoom = room;
     }
+
     public String goDirection(String direction) {
         String result = "";
         switch (direction.toLowerCase()) {

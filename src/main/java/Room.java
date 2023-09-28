@@ -33,6 +33,7 @@ public class Room {
     public String getDescription() {
         return description;
     }
+
     public void setDescription(String description) {
         this.description = description;
     }
@@ -43,7 +44,7 @@ public class Room {
     }
 
     public void setNorth(Room north) {
-        if(this.north != north) {
+        if (this.north != north) {
             this.north = north;
             north.setSouth(this);  // To make sure the connection is two-way
         }
@@ -55,7 +56,7 @@ public class Room {
     }
 
     public void setSouth(Room south) {
-        if(this.south != south) {
+        if (this.south != south) {
             this.south = south;
             south.setNorth(this);  // To make sure the connection is two-way
         }
@@ -81,7 +82,6 @@ public class Room {
     }
 
 
-
     public Room getWest() {
         return west;
     }
@@ -90,6 +90,7 @@ public class Room {
     public String toString() {
         return "Room name: " + this.name + ", Description: " + this.description;
     }
+
     public String availableDirections() {
         StringBuilder sb = new StringBuilder();
         if (this.getEast() != null) sb.append("East ");
