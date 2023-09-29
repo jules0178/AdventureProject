@@ -34,7 +34,7 @@ public class GameUI {
                             System.out.println(gameInitializer.getCurrentRoom().toString());
                         }
                         case "help", "info" -> displayHelp();
-                        case "look", "observe" -> lookAround();
+                        case "look", "observe" -> lookAround(playerNavigation.getCurrentRoom());
                         case "inventory" -> showInventory();
                         case "pick up" -> pickupItems();
                         case "drop" -> dropItems();
@@ -56,7 +56,6 @@ public class GameUI {
         System.out.println("'Start' - Starts the game.");
         System.out.println("'Help' - Displays this help menu.");
         System.out.println("'Look' - Shows details about the current room.");
-        System.out.println("'Handle' - Pick up or drop items");
         System.out.println("'Inventory' - Show inventory");
         System.out.println("'Pick up' - Pick up items");
         System.out.println("'Drop' - Drop items");
@@ -64,8 +63,7 @@ public class GameUI {
         System.out.println("'Exit' - Exits the game.");
     }
 
-    private void lookAround() {
-        Room currentRoom = playerNavigation.getCurrentRoom(); // Change this line
+    private void lookAround(Room currentRoom) {
         System.out.println("You are in: " + currentRoom.toString());
         System.out.println("You can go: " + currentRoom.availableDirections());
 
@@ -74,12 +72,13 @@ public class GameUI {
         if (!itemsInRoom.isEmpty()) {
             System.out.println("Items in this room:");
             for (Item item : itemsInRoom) {
-                System.out.println("- " + item.getItemName());
+                System.out.println("- " + item.getItemName() + ": " + item.getDescription());
             }
         } else {
             System.out.println("There are no items in this room.");
         }
     }
+
 
     private void dropItems() {
         System.out.print("Enter the name of the item you want to drop: ");
@@ -102,6 +101,7 @@ public class GameUI {
             System.out.println("Item not found in the room.");
         }
     }
+
     private void showInventory() {
         ArrayList<Item> inventory = playerNavigation.getInventory();
         if (!inventory.isEmpty()) {

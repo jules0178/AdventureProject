@@ -15,6 +15,7 @@ public class Room {
         this.description = generateRandomDescription();
         this.items = new ArrayList<>();
     }
+
     private String generateRandomDescription() {
         String[] adjectives = {"dark", "spooky", "bright", "airy", "moist", "mysterious", "silent", "echoing", "ornate", "simple"};
         String[] furnishings = {"with an old wooden chair", "with a broken table", "with a flickering lantern", "with a tattered rug", "with a dusty bookshelf", "with a hidden compartment", "with a grand fireplace", "with a mysterious painting"};
@@ -25,15 +26,6 @@ public class Room {
         String furnishing = furnishings[random.nextInt(furnishings.length)];
 
         return "A " + adjective + " room " + furnishing;
-    }
-
-    // getters and setters
-    public String getName() {
-        return name;
-    }
-
-    public String getDescription() {
-        return description;
     }
 
     public void setDescription(String description) {
@@ -84,7 +76,6 @@ public class Room {
     }
 
 
-
     public Room getWest() {
         return west;
     }
@@ -102,6 +93,7 @@ public class Room {
         if (this.getSouth() != null) sb.append("South ");
         return sb.toString();
     }
+
     public Item findItemByName(String itemName) {
         for (Item item : items) {  // Assuming 'items' is your ArrayList of Item objects in the Room class
             if (item.getItemName().equals(itemName)) {
@@ -110,6 +102,7 @@ public class Room {
         }
         return null;
     }
+
     public void addItem(Item item) {
         items.add(item);
     }

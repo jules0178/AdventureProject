@@ -11,15 +11,7 @@ public class Item {
         return name;
     }
 
-    public void setItemName(String name) {
-        this.name = name;
-    }
-
-    public String getItemDescription() {
+    public String getDescription() {
         return description;
-    }
-
-    public void setItemDescription(String description) {
-        this.description = description;
     }
 }
