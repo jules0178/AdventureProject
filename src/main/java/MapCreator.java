@@ -10,23 +10,34 @@ public class MapCreator {
         room3.addItem(new Item("key", "Unlocks a locked door"));
 
         Room room4 = new Room("Room 4");
-        room4.addItem(new Item("axe", "Can be used to break a weak door or fight enemy"));
+        room4.addItem(new Item("axe", "Can be used to break a weak door or fight enemies"));
 
         Room room5 = new Room("Room 5");
         room5.setDescription("A glorious room filled with treasure and wonders beyond imagination");
-        room5.addItem(new Item("treasure", "You have won you are rich"));
+        room5.addItem(new Item("treasure", "You have won; you are rich"));
 
         Room room6 = new Room("Room 6");
-        room6.addItem(new Item("book", "smort"));
+        room6.addItem(new Item("book", "A smart and insightful book"));
 
         Room room7 = new Room("Room 7");
         room7.addItem(new Item("torch", "You can see better"));
 
         Room room8 = new Room("Room 8");
-        room8.addItem(new Item("painting", "nice"));
+        room8.addItem(new Item("painting", "A beautiful painting"));
 
         Room room9 = new Room("Room 9");
+        room9.addItem(new Item("skull", "It's a creepy skull"));
 
+        Room room10 = new Room("Room 10");
+        room10.addItem(new Item("potion", "A mysterious potion"));
+
+        Room room11 = new Room("Room 11");
+        room11.addItem(new Item("shield", "Protective shield"));
+
+        Room room12 = new Room("Room 12");
+        room12.addItem(new Item("gem", "A precious gemstone"));
+
+        // Connect the rooms
         room1.setEast(room2);
         room1.setSouth(room4);
 
@@ -54,6 +65,14 @@ public class MapCreator {
         room9.setWest(room8);
         room9.setNorth(room6);
 
-        return room1;
+        room10.setEast(room11);
+        room10.setSouth(room1);
+
+        room11.setWest(room10);
+        room11.setSouth(room12);
+
+        room12.setNorth(room11);
+
+        return room1; // Return the starting room
     }
 }
