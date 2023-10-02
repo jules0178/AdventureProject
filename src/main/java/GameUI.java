@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public class GameUI {
     Scanner keyboard = new Scanner(System.in);
     GameInitializer gameInitializer = new GameInitializer();
-    PlayerNavigation playerNavigation = new PlayerNavigation(new MapCreator().buildMap());
+    PlayerNavigation playerNavigation = new PlayerNavigation(new MapCreator().buildMap(), 10);
 
     public void start() {
         System.out.println("""
@@ -72,7 +72,7 @@ public class GameUI {
         if (!itemsInRoom.isEmpty()) {
             System.out.println("Items in this room:");
             for (Item item : itemsInRoom) {
-                System.out.println("- " + item.getItemName() + ": " + item.getDescription());
+                System.out.println("- " + item.getItemName() + ": " + item.getDescription() + ", Weight: " + item.getWeight());
             }
         } else {
             System.out.println("There are no items in this room.");
@@ -94,11 +94,16 @@ public class GameUI {
     private void pickupItems() {
         System.out.print("Enter the name of the item you want to pick up: ");
         String itemName = keyboard.nextLine().trim();
-        boolean success = playerNavigation.pickUpItem(itemName);
-        if (success) {
-            System.out.println(itemName + " has been picked up.");
+
+        if (playerNavigation.getCarryingWeight() >= playerNavigation.getMaxCarryWeight()) {
+            System.out.println("You cannot carry more items. Your inventory is full.");
         } else {
-            System.out.println("Item not found in the room.");
+            boolean success = playerNavigation.pickUpItem(itemName);
+            if (success) {
+                System.out.println(itemName + " has been picked up.");
+            } else {
+                System.out.println("Item not found in the room.");
+            }
         }
     }
 
@@ -107,7 +112,7 @@ public class GameUI {
         if (!inventory.isEmpty()) {
             System.out.println("Inventory:");
             for (Item item : inventory) {
-                System.out.println("- " + item.getItemName());
+                System.out.println("- " + item.getItemName() + ", Wegiht: " + item.getWeight());
             }
         } else {
             System.out.println("Inventory is empty.");

@@ -3,9 +3,13 @@ import java.util.ArrayList;
 public class PlayerNavigation {
     private ArrayList<Item> inventory = new ArrayList<>();
     private Room currentRoom;
+    private int carryingWeight; // Aktuel vægt, som spilleren bærer
+    private int maxCarryWeight; // Maksimal bærevægt
 
-    public PlayerNavigation(Room startRoom) {
+    public PlayerNavigation(Room startRoom, int maxCarryWeight) {
         this.currentRoom = startRoom;
+        this.maxCarryWeight = maxCarryWeight;
+        this.carryingWeight = 0;
     }
 
     public Room getCurrentRoom() {
@@ -55,11 +59,17 @@ public class PlayerNavigation {
     public boolean pickUpItem(String itemName) {
         Item item = currentRoom.findItemByName(itemName);
         if (item != null) {
-            currentRoom.removeItem(item.getItemName());
-            inventory.add(item);
-            return true;  // Return true when item is successfully picked up
+            int totalWeight = carryingWeight + item.getWeight();
+            if (totalWeight <= maxCarryWeight) {
+                currentRoom.removeItem(item.getItemName());
+                inventory.add(item);
+                carryingWeight = totalWeight;
+                return true; // Returnér true, når genstanden er blevet samlet op
+            } else {
+                return false; // Returnér false, når genstanden er for tung til at bære
+            }
         } else {
-            return false; // Return false when item is not found
+            return false; // Returnér false, når genstanden ikke findes i rummet
         }
     }
 
@@ -74,13 +84,22 @@ public class PlayerNavigation {
         if (itemToDrop != null) {
             inventory.remove(itemToDrop);
             currentRoom.addItem(itemToDrop);
-            return true;
+            carryingWeight -= itemToDrop.getWeight();
+            return true; // Returnér true, når genstanden er blevet fjernet fra inventaret
         } else {
-            return false;
+            return false; // Returnér false, når genstanden ikke findes i inventaret
         }
     }
 
     public ArrayList<Item> getInventory() {
         return inventory;
+    }
+
+    public int getCarryingWeight() {
+        return carryingWeight;
+    }
+
+    public int getMaxCarryWeight() {
+        return maxCarryWeight;
     }
 }
