@@ -1,9 +1,9 @@
-public class Item {
+public class Equippable {
     private String name;
     private String description;
     private int weight;
 
-    public Item(String name, String description, int weight) {
+    public Equippable(String name, String description, int weight) {
         this.name = name;
         this.description = description;
         this.weight = weight;

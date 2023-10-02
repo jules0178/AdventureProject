@@ -3,23 +3,19 @@ import java.util.ArrayList;
 
 public class GameUI {
     Scanner keyboard = new Scanner(System.in);
-    GameInitializer gameInitializer = new GameInitializer();
     PlayerNavigation playerNavigation = new PlayerNavigation(new MapCreator().buildMap(), 10);
 
     public void start() {
-        System.out.println("""
-                Welcome to Adventure game. Please type:
-                Start
-                Help
-                Look
-                Go + Direction
-                Exit
-                """);
+        System.out.println("Welcome to Adventure game. Please type 'help' for instructions.");
 
         while (true) {
             try {
                 String choice = keyboard.nextLine().toLowerCase().trim();
 
+                if (!playerNavigation.isPlayerAlive(playerNavigation.getHealth())) {
+                    System.out.println("Game Over. You have died!");
+                    break;
+                }
                 if (choice.startsWith("go ")) {
                     String[] parts = choice.split(" ");
                     if (parts.length > 1) {
@@ -29,13 +25,10 @@ public class GameUI {
                     }
                 } else {
                     switch (choice) {
-                        case "start", "begin" -> {
-                            System.out.println("Program starting.....");
-                            System.out.println(gameInitializer.getCurrentRoom().toString());
-                        }
                         case "help", "info" -> displayHelp();
                         case "look", "observe" -> lookAround(playerNavigation.getCurrentRoom());
                         case "health", "status" -> showHealth();
+                        case "eat", "consume" -> useFood();
                         case "inventory" -> showInventory();
                         case "pick up" -> pickupItems();
                         case "drop" -> dropItems();
@@ -54,11 +47,11 @@ public class GameUI {
 
     private void displayHelp() {
         System.out.println("Here are some helpful instructions:");
-        System.out.println("'Start' - Starts the game.");
         System.out.println("'Help' - Displays this help menu.");
         System.out.println("'Look' - Shows details about the current room.");
         System.out.println("'Health - Show Health status.");
         System.out.println("'Inventory' - Show inventory");
+        System.out.println("'Eat' - Uses consumable");
         System.out.println("'Pick up' - Pick up items");
         System.out.println("'Drop' - Drop items");
         System.out.println("'Go + [Direction]' - Moves you in the specified direction. Valid directions are N, S, E, W.");
@@ -69,12 +62,12 @@ public class GameUI {
         System.out.println("You are in: " + currentRoom.toString());
         System.out.println("You can go: " + currentRoom.availableDirections());
 
-        ArrayList<Item> itemsInRoom = currentRoom.getItems();
+        ArrayList<Equippable> itemsInRoom = currentRoom.getItems();
 
         if (!itemsInRoom.isEmpty()) {
             System.out.println("Items in this room:");
-            for (Item item : itemsInRoom) {
-                System.out.println("- " + item.getItemName() + ": " + item.getDescription() + ", Weight: " + item.getWeight());
+            for (Equippable equippable : itemsInRoom) {
+                System.out.println("- " + equippable.getItemName() + ": " + equippable.getDescription() + ", Weight: " + equippable.getWeight());
             }
         } else {
             System.out.println("There are no items in this room.");
@@ -110,11 +103,11 @@ public class GameUI {
     }
 
     private void showInventory() {
-        ArrayList<Item> inventory = playerNavigation.getInventory();
+        ArrayList<Equippable> inventory = playerNavigation.getInventory();
         if (!inventory.isEmpty()) {
             System.out.println("Inventory:");
-            for (Item item : inventory) {
-                System.out.println("- " + item.getItemName() + ", Wegiht: " + item.getWeight());
+            for (Equippable equippable : inventory) {
+                System.out.println("- " + equippable.getItemName() + ", Weight: " + equippable.getWeight());
             }
         } else {
             System.out.println("Inventory is empty.");
@@ -126,6 +119,11 @@ public class GameUI {
         String healthStatus = getHealthStatus(playerHealth);
 
         System.out.println("Health: " + playerHealth + " - " + healthStatus);
+
+        if (playerHealth <= 0) {
+            System.out.println("Game Over. You have died!");
+            System.exit(0);
+        }
     }
     private String getHealthStatus(int health) {
         if (health >= 80) {
@@ -136,8 +134,22 @@ public class GameUI {
             return "Caution";
         } else if (health >= 20) {
             return "Danger!";
-        } else {
+        } else if( health > 0){
             return "Critical!";
+        } else {
+            return "You have died!";
         }
     }
+    private void useFood() {
+        System.out.print("Enter the name of the food you want to use: ");
+        String foodName = keyboard.nextLine().trim();
+
+        boolean success = playerNavigation.useFood(foodName);
+        if (success) {
+            System.out.println("You used " + foodName + " and your health has been updated.");
+        } else {
+            System.out.println("Invalid food item or not found in your inventory.");
+        }
+    }
+
 }

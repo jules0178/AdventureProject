@@ -1,11 +1,11 @@
 import java.util.ArrayList;
 
 public class PlayerNavigation {
-    private ArrayList<Item> inventory = new ArrayList<>();
+    private final ArrayList<Equippable> inventory = new ArrayList<>();
     private Room currentRoom;
     private int health;
     private int carryingWeight; // Actual weight the player is carrying
-    private int maxCarryWeight; // Maximum carrying Weight
+    private final int maxCarryWeight; // Maximum carrying Weight
 
     public PlayerNavigation(Room startRoom, int maxCarryWeight) {
         this.currentRoom = startRoom;
@@ -59,12 +59,12 @@ public class PlayerNavigation {
     }
 
     public boolean pickUpItem(String itemName) {
-        Item item = currentRoom.findItemByName(itemName);
-        if (item != null) {
-            int totalWeight = carryingWeight + item.getWeight();
+        Equippable equippable = currentRoom.findItemByName(itemName);
+        if (equippable != null) {
+            int totalWeight = carryingWeight + equippable.getWeight();
             if (totalWeight <= maxCarryWeight) {
-                currentRoom.removeItem(item.getItemName());
-                inventory.add(item);
+                currentRoom.removeItem(equippable.getItemName());
+                inventory.add(equippable);
                 carryingWeight = totalWeight;
                 return true; // Return true, when item has been picked up
             } else {
@@ -76,24 +76,24 @@ public class PlayerNavigation {
     }
 
     public boolean dropItem(String itemName) {
-        Item itemToDrop = null;
-        for (Item item : inventory) {
-            if (item.getItemName().equals(itemName)) {
-                itemToDrop = item;
+        Equippable equippableToDrop = null;
+        for (Equippable equippable : inventory) {
+            if (equippable.getItemName().equals(itemName)) {
+                equippableToDrop = equippable;
                 break;
             }
         }
-        if (itemToDrop != null) {
-            inventory.remove(itemToDrop);
-            currentRoom.addItem(itemToDrop);
-            carryingWeight -= itemToDrop.getWeight();
+        if (equippableToDrop != null) {
+            inventory.remove(equippableToDrop);
+            currentRoom.addItem(equippableToDrop);
+            carryingWeight -= equippableToDrop.getWeight();
             return true; // Return true, when item has been removed from inventory
         } else {
             return false; // Return false, when item does not exist in inventory
         }
     }
 
-    public ArrayList<Item> getInventory() {
+    public ArrayList<Equippable> getInventory() {
         return inventory;
     }
 
@@ -105,15 +105,40 @@ public class PlayerNavigation {
         health += amount;
     }
 
-    public void decreaseHealth(int amount) {
-        health -= amount;
-    }
-
     public int getCarryingWeight() {
         return carryingWeight;
     }
 
     public int getMaxCarryWeight() {
         return maxCarryWeight;
+    }
+
+    public boolean isPlayerAlive(int health) {
+        return health > 0;
+    }
+
+    public boolean useFood(String foodName) {
+        Equippable equippable = findFoodByName(foodName);
+        if (equippable instanceof Consumable consumableItem) {
+            int healthPoints = consumableItem.getHealthPoints();
+
+            increaseHealth(healthPoints);
+
+            inventory.remove(consumableItem);
+            carryingWeight -= consumableItem.getWeight();
+
+            return true;
+        } else {
+return false;
+        }
+    }
+
+    private Equippable findFoodByName(String foodName) {
+        for (Equippable equippable : inventory) {
+            if (equippable.getItemName().equalsIgnoreCase(foodName) && equippable instanceof Consumable) {
+                return equippable;
+            }
+        }
+return null;
     }
 }

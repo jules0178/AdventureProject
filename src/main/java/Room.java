@@ -8,12 +8,12 @@ public class Room {
     private Room south;
     private Room east;
     private Room west;
-    private ArrayList<Item> items;
+    private ArrayList<Equippable> equippables;
 
     public Room(String n) {
         this.name = n;
         this.description = generateRandomDescription();
-        this.items = new ArrayList<>();
+        this.equippables = new ArrayList<>();
     }
 
     private String generateRandomDescription() {
@@ -94,31 +94,31 @@ public class Room {
         return sb.toString();
     }
 
-    public Item findItemByName(String itemName) {
-        for (Item item : items) {  // Assuming 'items' is your ArrayList of Item objects in the Room class
-            if (item.getItemName().equals(itemName)) {
-                return item;
+    public Equippable findItemByName(String itemName) {
+        for (Equippable equippable : equippables) {  // Assuming 'items' is your ArrayList of Item objects in the Room class
+            if (equippable.getItemName().equals(itemName)) {
+                return equippable;
             }
         }
         return null;
     }
 
-    public void addItem(Item item) {
-        items.add(item);
+    public void addItem(Equippable equippable) {
+        equippables.add(equippable);
     }
 
-    public Item removeItem(String itemName) {
-        for (Item item : items) {
-            if (item.getItemName().equalsIgnoreCase(itemName)) {
-                items.remove(item);
-                return item;  // Return the removed item
+    public Equippable removeItem(String itemName) {
+        for (Equippable equippable : equippables) {
+            if (equippable.getItemName().equalsIgnoreCase(itemName)) {
+                equippables.remove(equippable);
+                return equippable;  // Return the removed item
             }
         }
         return null;  // Item not found
     }
 
-    public ArrayList<Item> getItems() {
-        return items;
+    public ArrayList<Equippable> getItems() {
+        return equippables;
     }
 
 }
