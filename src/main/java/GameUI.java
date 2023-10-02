@@ -35,6 +35,7 @@ public class GameUI {
                         }
                         case "help", "info" -> displayHelp();
                         case "look", "observe" -> lookAround(playerNavigation.getCurrentRoom());
+                        case "health", "status" -> showHealth();
                         case "inventory" -> showInventory();
                         case "pick up" -> pickupItems();
                         case "drop" -> dropItems();
@@ -56,6 +57,7 @@ public class GameUI {
         System.out.println("'Start' - Starts the game.");
         System.out.println("'Help' - Displays this help menu.");
         System.out.println("'Look' - Shows details about the current room.");
+        System.out.println("'Health - Show Health status.");
         System.out.println("'Inventory' - Show inventory");
         System.out.println("'Pick up' - Pick up items");
         System.out.println("'Drop' - Drop items");
@@ -116,6 +118,26 @@ public class GameUI {
             }
         } else {
             System.out.println("Inventory is empty.");
+        }
+    }
+
+    private void showHealth() {
+        int playerHealth = playerNavigation.getHealth();
+        String healthStatus = getHealthStatus(playerHealth);
+
+        System.out.println("Health: " + playerHealth + " - " + healthStatus);
+    }
+    private String getHealthStatus(int health) {
+        if (health >= 80) {
+            return "Excellent";
+        } else if (health >= 60) {
+            return "Fine";
+        } else if (health >= 40) {
+            return "Caution";
+        } else if (health >= 20) {
+            return "Danger!";
+        } else {
+            return "Critical!";
         }
     }
 }

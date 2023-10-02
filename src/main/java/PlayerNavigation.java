@@ -3,11 +3,13 @@ import java.util.ArrayList;
 public class PlayerNavigation {
     private ArrayList<Item> inventory = new ArrayList<>();
     private Room currentRoom;
-    private int carryingWeight; // Aktuel vægt, som spilleren bærer
-    private int maxCarryWeight; // Maksimal bærevægt
+    private int health;
+    private int carryingWeight; // Actual weight the player is carrying
+    private int maxCarryWeight; // Maximum carrying Weight
 
     public PlayerNavigation(Room startRoom, int maxCarryWeight) {
         this.currentRoom = startRoom;
+        this.health = 10;
         this.maxCarryWeight = maxCarryWeight;
         this.carryingWeight = 0;
     }
@@ -64,12 +66,12 @@ public class PlayerNavigation {
                 currentRoom.removeItem(item.getItemName());
                 inventory.add(item);
                 carryingWeight = totalWeight;
-                return true; // Returnér true, når genstanden er blevet samlet op
+                return true; // Return true, when item has been picked up
             } else {
-                return false; // Returnér false, når genstanden er for tung til at bære
+                return false; // Return false, when item is too heavy to carry
             }
         } else {
-            return false; // Returnér false, når genstanden ikke findes i rummet
+            return false; // Return false, when item does not exist in room
         }
     }
 
@@ -85,14 +87,26 @@ public class PlayerNavigation {
             inventory.remove(itemToDrop);
             currentRoom.addItem(itemToDrop);
             carryingWeight -= itemToDrop.getWeight();
-            return true; // Returnér true, når genstanden er blevet fjernet fra inventaret
+            return true; // Return true, when item has been removed from inventory
         } else {
-            return false; // Returnér false, når genstanden ikke findes i inventaret
+            return false; // Return false, when item does not exist in inventory
         }
     }
 
     public ArrayList<Item> getInventory() {
         return inventory;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void increaseHealth(int amount) {
+        health += amount;
+    }
+
+    public void decreaseHealth(int amount) {
+        health -= amount;
     }
 
     public int getCarryingWeight() {

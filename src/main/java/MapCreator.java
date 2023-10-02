@@ -65,6 +65,12 @@ public class MapCreator {
         room9.setWest(room8);
         room9.setNorth(room6);
 
+        room5.setNorth(room12);
+        room12.setSouth(room5);
+
+        room12.setWest(room11);
+        room11.setEast(room12);
+
         return room1;
     }
 }
