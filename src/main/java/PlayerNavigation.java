@@ -7,11 +7,11 @@ public class PlayerNavigation {
     private int carryingWeight; // Actual weight the player is carrying
     private final int maxCarryWeight; // Maximum carrying Weight
 
-    public PlayerNavigation(Room startRoom, int maxCarryWeight) {
+    public PlayerNavigation(Room startRoom, int carryingWeight) {
         this.currentRoom = startRoom;
         this.health = 10;
-        this.maxCarryWeight = maxCarryWeight;
-        this.carryingWeight = 0;
+        this.maxCarryWeight = 30;
+        this.carryingWeight = carryingWeight;
     }
 
     public Room getCurrentRoom() {
