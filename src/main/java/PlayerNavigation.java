@@ -9,7 +9,7 @@ public class PlayerNavigation {
 
     public PlayerNavigation(Room startRoom, int maxCarryWeight) {
         this.currentRoom = startRoom;
-        this.health = 10;
+        this.health = 50;
         this.maxCarryWeight = maxCarryWeight;
         this.carryingWeight = 0;
     }

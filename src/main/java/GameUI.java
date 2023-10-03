@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class GameUI {
     Scanner keyboard = new Scanner(System.in);
-    PlayerNavigation playerNavigation = new PlayerNavigation(new MapCreator().buildMap(), 10);
+    PlayerNavigation playerNavigation = new PlayerNavigation(new MapCreator().buildMap(), 50);
 
     public void start() {
         System.out.println("Welcome to Adventure game. Please type 'help' for instructions.");
