@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class GameUI {
     Scanner keyboard = new Scanner(System.in);
-    PlayerNavigation playerNavigation = new PlayerNavigation(new MapCreator().buildMap(), 10);
+    GameInitializer gameInitializer = new GameInitializer();
 
     public void start() {
         System.out.println("Welcome to Adventure game. Please type 'help' for instructions.");
@@ -12,7 +12,7 @@ public class GameUI {
             try {
                 String choice = keyboard.nextLine().toLowerCase().trim();
 
-                if (!playerNavigation.isPlayerAlive(playerNavigation.getHealth())) {
+                if (!gameInitializer.isPlayerAlive(gameInitializer.getHealth())) {
                     System.out.println("Game Over. You have died!");
                     break;
                 }
@@ -20,13 +20,13 @@ public class GameUI {
                     String[] parts = choice.split(" ");
                     if (parts.length > 1) {
                         char direction = parts[1].charAt(0);
-                        String moveResult = playerNavigation.goDirection(String.valueOf(direction));
+                        String moveResult = gameInitializer.goDirection(String.valueOf(direction));
                         System.out.println(moveResult);
                     }
                 } else {
                     switch (choice) {
                         case "help", "info" -> displayHelp();
-                        case "look", "observe" -> lookAround(playerNavigation.getCurrentRoom());
+                        case "look", "observe" -> lookAround(gameInitializer.getCurrentRoom());
                         case "health", "status" -> showHealth();
                         case "eat", "consume" -> useFood();
                         case "inventory" -> showInventory();
@@ -78,7 +78,7 @@ public class GameUI {
     private void dropItems() {
         System.out.print("Enter the name of the item you want to drop: ");
         String itemName = keyboard.nextLine().trim();
-        boolean success = playerNavigation.dropItem(itemName);
+        boolean success = gameInitializer.dropItem(itemName);
         if (success) {
             System.out.println(itemName + " has been dropped.");
         } else {
@@ -90,10 +90,10 @@ public class GameUI {
         System.out.print("Enter the name of the item you want to pick up: ");
         String itemName = keyboard.nextLine().trim();
 
-        if (playerNavigation.getCarryingWeight() >= playerNavigation.getMaxCarryWeight()) {
+        if (gameInitializer.getCarryingWeight() >= gameInitializer.getMaxCarryWeight()) {
             System.out.println("You cannot carry more items. Your inventory is full.");
         } else {
-            boolean success = playerNavigation.pickUpItem(itemName);
+            boolean success = gameInitializer.pickUpItem(itemName);
             if (success) {
                 System.out.println(itemName + " has been picked up.");
             } else {
@@ -103,7 +103,7 @@ public class GameUI {
     }
 
     private void showInventory() {
-        ArrayList<Equippable> inventory = playerNavigation.getInventory();
+        ArrayList<Equippable> inventory = gameInitializer.getInventory();
         if (!inventory.isEmpty()) {
             System.out.println("Inventory:");
             for (Equippable equippable : inventory) {
@@ -115,7 +115,7 @@ public class GameUI {
     }
 
     private void showHealth() {
-        int playerHealth = playerNavigation.getHealth();
+        int playerHealth = gameInitializer.getHealth();
         String healthStatus = getHealthStatus(playerHealth);
 
         System.out.println("Health: " + playerHealth + " - " + healthStatus);
@@ -144,7 +144,7 @@ public class GameUI {
         System.out.print("Enter the name of the food you want to use: ");
         String foodName = keyboard.nextLine().trim();
 
-        boolean success = playerNavigation.useFood(foodName);
+        boolean success = gameInitializer.useFood(foodName);
         if (success) {
             System.out.println("You used " + foodName + " and your health has been updated.");
         } else {
