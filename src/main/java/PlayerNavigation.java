@@ -7,11 +7,11 @@ public class PlayerNavigation {
     private int carryingWeight; // Actual weight the player is carrying
     private final int maxCarryWeight; // Maximum carrying Weight
 
-    public PlayerNavigation(Room startRoom, int carryingWeight) {
+    public PlayerNavigation(Room startRoom, int maxCarryWeight) {
         this.currentRoom = startRoom;
         this.health = 10;
-        this.maxCarryWeight = 20;
-        this.carryingWeight = carryingWeight;
+        this.maxCarryWeight = maxCarryWeight;
+        this.carryingWeight = 0;
     }
 
     public Room getCurrentRoom() {
@@ -129,7 +129,7 @@ public class PlayerNavigation {
 
             return true;
         } else {
-            return false;
+return false;
         }
     }
 
@@ -139,6 +139,6 @@ public class PlayerNavigation {
                 return equippable;
             }
         }
-        return null;
+return null;
     }
 }
