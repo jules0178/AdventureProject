@@ -8,7 +8,7 @@ public class Room {
     private Room south;
     private Room east;
     private Room west;
-    private ArrayList<Equippable> equip;
+    private ArrayList<Item> equip;
 
     public Room(String n) {
         this.name = n;
@@ -94,29 +94,29 @@ public class Room {
         return sb.toString();
     }
 
-    public Equippable findItemByName(String itemName) {
-        for (Equippable equippable : equip) {  // Assuming 'items' is your ArrayList of Item objects in the Room class
-            if (equippable.getItemName().equals(itemName)) {
-                return equippable;
+    public Item findItemByName(String itemName) {
+        for (Item item : equip) {  // Assuming 'items' is your ArrayList of Item objects in the Room class
+            if (item.getItemName().equals(itemName)) {
+                return item;
             }
         }
         return null;
     }
 
-    public void addItem(Equippable equippable) {
-        equip.add(equippable);
+    public void addItem(Item item) {
+        equip.add(item);
     }
 
     public void removeItem(String itemName) {
-        for (Equippable equippable : equip) {
-            if (equippable.getItemName().equalsIgnoreCase(itemName)) {
-                equip.remove(equippable);
+        for (Item item : equip) {
+            if (item.getItemName().equalsIgnoreCase(itemName)) {
+                equip.remove(item);
                 return;  // Return the removed item
             }
         }
     }
 
-    public ArrayList<Equippable> getItems() {
+    public ArrayList<Item> getItems() {
         return equip;
     }
 }

@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class GameUI {
     Scanner keyboard = new Scanner(System.in);
-    GameInitializer gameInitializer = new GameInitializer();
+    Adventure adventure = new Adventure();
 
     public void start() {
         System.out.println("""
@@ -17,7 +17,7 @@ public class GameUI {
             try {
                 String choice = keyboard.nextLine().toLowerCase().trim();
 
-                if (!gameInitializer.isPlayerAlive(gameInitializer.getHealth())) {
+                if (!adventure.isPlayerAlive(adventure.getHealth())) {
                     System.out.println("Game Over. You have died!");
                     break;
                 }
@@ -25,13 +25,13 @@ public class GameUI {
                     String[] parts = choice.split(" ");
                     if (parts.length > 1) {
                         char direction = parts[1].charAt(0);
-                        String moveResult = gameInitializer.goDirection(String.valueOf(direction));
+                        String moveResult = adventure.goDirection(String.valueOf(direction));
                         System.out.println(moveResult);
                     }
                 } else {
                     switch (choice) {
                         case "help", "info", "h" -> displayHelp();
-                        case "look", "observe", "l" -> lookAround(gameInitializer.getCurrentRoom());
+                        case "look", "observe", "l" -> lookAround(adventure.getCurrentRoom());
                         case "health", "status", "c" -> showHealth();
                         case "attack", "strike", "shoot" -> attack();
                         case "eat", "consume", "drink", "e" -> useFood();
@@ -70,12 +70,12 @@ public class GameUI {
         System.out.println("You are in: " + currentRoom.toString());
         System.out.println("You can go: " + currentRoom.availableDirections());
 
-        ArrayList<Equippable> itemsInRoom = currentRoom.getItems();
+        ArrayList<Item> itemsInRoom = currentRoom.getItems();
 
         if (!itemsInRoom.isEmpty()) {
             System.out.println("Items in this room:");
-            for (Equippable equippable : itemsInRoom) {
-                System.out.println("- " + equippable.getItemName() + ": " + equippable.getDescription() + ", Weight: " + equippable.getWeight());
+            for (Item item : itemsInRoom) {
+                System.out.println("- " + item.getItemName() + ": " + item.getDescription() + ", Weight: " + item.getWeight());
             }
         } else {
             System.out.println("There are no items in this room.");
@@ -86,7 +86,7 @@ public class GameUI {
     private void dropItems() {
         System.out.print("Enter the name of the item you want to drop: ");
         String itemName = keyboard.nextLine().trim();
-        boolean success = gameInitializer.dropItem(itemName);
+        boolean success = adventure.dropItem(itemName);
         if (success) {
             System.out.println(itemName + " has been dropped.");
         } else {
@@ -98,10 +98,10 @@ public class GameUI {
         System.out.print("Enter the name of the item you want to pick up: ");
         String itemName = keyboard.nextLine().trim();
 
-        if (gameInitializer.getCarryingWeight() >= gameInitializer.getMaxCarryWeight()) {
+        if (adventure.getCarryingWeight() >= adventure.getMaxCarryWeight()) {
             System.out.println("You cannot carry more items. Your inventory is full.");
         } else {
-            boolean success = gameInitializer.pickUpItem(itemName);
+            boolean success = adventure.pickUpItem(itemName);
             if (success) {
                 System.out.println(itemName + " has been picked up.");
             } else {
@@ -111,11 +111,11 @@ public class GameUI {
     }
 
     private void showInventory() {
-        ArrayList<Equippable> inventory = gameInitializer.getInventory();
+        ArrayList<Item> inventory = adventure.getInventory();
         if (!inventory.isEmpty()) {
             System.out.println("Inventory:");
-            for (Equippable equippable : inventory) {
-                System.out.println("- " + equippable.getItemName() + ", Weight: " + equippable.getWeight());
+            for (Item item : inventory) {
+                System.out.println("- " + item.getItemName() + ", Weight: " + item.getWeight());
             }
         } else {
             System.out.println("Inventory is empty.");
@@ -123,7 +123,7 @@ public class GameUI {
     }
 
     private void showHealth() {
-        int playerHealth = gameInitializer.getHealth();
+        int playerHealth = adventure.getHealth();
         String healthStatus = getHealthStatus(playerHealth);
 
         System.out.println("Health: " + playerHealth + " - " + healthStatus);
@@ -152,7 +152,7 @@ public class GameUI {
         System.out.print("Enter the name of the food you want to use: ");
         String foodName = keyboard.nextLine().trim();
 
-        boolean success = gameInitializer.useFood(foodName);
+        boolean success = adventure.useFood(foodName);
         if (success) {
             System.out.println("You used " + foodName + " and your health has been updated.");
         } else {
@@ -161,16 +161,16 @@ public class GameUI {
     }
     private void equipItem() {
         System.out.print("Enter the name of the item you want to equip: ");
-        String itemName = keyboard.nextLine().trim();
-        boolean success = gameInitializer.equipItem(itemName);
+        String weaponName = keyboard.nextLine().trim();
+        boolean success = adventure.equipItem(weaponName);
 
         if (success) {
-            System.out.println(itemName + " has been equipped.");
+            System.out.println(weaponName + " has been equipped.");
         } else {
             System.out.println("Item not found in your inventory or cannot be equipped.");
         }
     }
     private void attack(){
-        gameInitializer.performAttack();
+        adventure.performAttack();
     }
 }

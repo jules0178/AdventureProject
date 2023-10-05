@@ -1,6 +1,6 @@
-public class Consumable extends Equippable {
+public class Food extends Item {
     private int healthPoints;
-    public Consumable(String name, String description, int weight, int healthPoints) {
+    public Food(String name, String description, int weight, int healthPoints) {
         super(name, description, weight);
         this.healthPoints = healthPoints;
     }
