@@ -143,10 +143,26 @@ public class PlayerNavigation {
                 return null;
     }
 
-    public void equip(Weapon newWeapon) {
-        this.equippedWeapon = newWeapon;
+    public boolean equip(String newWeapon) {
+        Weapon weaponToEquip = findWeaponByName(newWeapon);
+
+        if (weaponToEquip != null) {
+            equippedWeapon = weaponToEquip;
+            return true;
+        } else {
+            return false; // Return false, if weapon is not in the players inventory
+        }
     }
 
+    private Weapon findWeaponByName(String newWeapon) {
+        for (Equippable equippable : inventory) {
+            if (equippable.getItemName().equalsIgnoreCase(newWeapon) && equippable instanceof Weapon) {
+                return (Weapon) equippable;
+            }
+        }
+        return null;
+
+    }
     public boolean attack() {
         if (equippedWeapon == null) {
             System.out.println("You have no weapon equipped.");

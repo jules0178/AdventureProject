@@ -2,7 +2,9 @@ public class MapCreator {
     public Room buildMap() {
         Room room1 = new Room("Room 1");
         room1.addItem(new Equippable("lantern", "A lantern that emits a soft glow", 10));
+        room1.addItem(new RangedWeapon("crossbow", "an old tattered crossbow with a single bolt", 4, 8, 1));
         room1.addItem(new Consumable("flask", "An odd red liquid boils inside the flask", 1, -20));
+
         Room room2 = new Room("Room 2");
         room2.addItem(new MeleeWeapon("sword", "Sharp weapon", 3, 10));
         room2.addItem(new Consumable("apple", "Red fruit", 1, 20));

@@ -36,6 +36,7 @@ public class GameUI {
                         case "attack", "strike", "shoot" -> attack();
                         case "eat", "consume", "drink", "e" -> useFood();
                         case "inventory", "i", "inv" -> showInventory();
+                        case "equip" -> equipItem();
                         case "pick up", "add", "a" -> pickupItems();
                         case "drop", "remove", "r" -> dropItems();
                         case "exit", "bye", "quit" -> {
@@ -159,7 +160,15 @@ public class GameUI {
         }
     }
     private void equipItem() {
+        System.out.print("Enter the name of the item you want to equip: ");
+        String itemName = keyboard.nextLine().trim();
+        boolean success = gameInitializer.equipItem(itemName);
 
+        if (success) {
+            System.out.println(itemName + " has been equipped.");
+        } else {
+            System.out.println("Item not found in your inventory or cannot be equipped.");
+        }
     }
     private void attack(){
         gameInitializer.performAttack();

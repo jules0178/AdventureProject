@@ -51,4 +51,8 @@ public class GameInitializer {
     public boolean performAttack() {
         return playerNavigation.attack();
     }
+
+    public boolean equipItem(String itemName) {
+        return playerNavigation.equip(itemName);
+    }
 }
