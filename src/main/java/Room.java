@@ -106,9 +106,6 @@ public class Room {
     public void addItem(Equippable equippable) {
         equip.add(equippable);
     }
-    public void addItem(MeleeWeapon meleeWeapon){
-        
-    }
 
     public void removeItem(String itemName) {
         for (Equippable equippable : equip) {
