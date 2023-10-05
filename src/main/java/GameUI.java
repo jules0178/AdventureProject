@@ -33,11 +33,11 @@ public class GameUI {
                         case "help", "info", "h" -> displayHelp();
                         case "look", "observe", "l" -> lookAround(adventure.getCurrentRoom());
                         case "health", "status", "c" -> showHealth();
-                        case "attack", "strike", "shoot" -> attack();
+                        case "attack", "strike", "shoot", "a" -> attack();
                         case "eat", "consume", "drink", "e" -> useFood();
                         case "inventory", "i", "inv" -> showInventory();
-                        case "equip" -> equipItem();
-                        case "pick up", "add", "a" -> pickupItems();
+                        case "equip", "handle", "q" -> equipItem();
+                        case "pick up", "add", "p" -> pickupItems();
                         case "drop", "remove", "r" -> dropItems();
                         case "exit", "bye", "quit" -> {
                             System.out.println("Exiting Program -------- ");
