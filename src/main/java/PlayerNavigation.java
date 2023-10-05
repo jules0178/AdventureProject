@@ -5,6 +5,7 @@ public class PlayerNavigation {
     private Room currentRoom;
     private int health;
     private int carryingWeight; // Actual weight the player is carrying
+    private Weapon equippedWeapon;
     private final int maxCarryWeight; // Maximum carrying Weight
 
     public PlayerNavigation(Room startRoom, int carryingWeight) {
@@ -140,5 +141,22 @@ return false;
             }
         }
 return null;
+    }
+
+    public void equip(Weapon newWeapon) {
+        this.equippedWeapon = newWeapon;
+    }
+
+    public void attack() {
+        if (equippedWeapon == null) {
+            System.out.println("You have no weapon equipped.");
+            return;
+        }
+        if (!equippedWeapon.canUse()) {
+            System.out.println("Your weapon is out of ammunition.");
+            return;
+        }
+        equippedWeapon.use();
+        System.out.println("You attacked!");
     }
 }

@@ -41,7 +41,7 @@ public class GameInitializer {
         return playerNavigation.getMaxCarryWeight();
     }
 
-    public boolean isPlayerAlive(int health) {
+    public boolean isPlayerAlive(int ignoredHealth) {
         return playerNavigation.isPlayerAlive(playerNavigation.getHealth());
     }
 

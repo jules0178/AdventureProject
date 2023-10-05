@@ -8,12 +8,12 @@ public class Room {
     private Room south;
     private Room east;
     private Room west;
-    private ArrayList<Equippable> equippables;
+    private ArrayList<Equippable> equip;
 
     public Room(String n) {
         this.name = n;
         this.description = generateRandomDescription();
-        this.equippables = new ArrayList<>();
+        this.equip = new ArrayList<>();
     }
 
     private String generateRandomDescription() {
@@ -95,7 +95,7 @@ public class Room {
     }
 
     public Equippable findItemByName(String itemName) {
-        for (Equippable equippable : equippables) {  // Assuming 'items' is your ArrayList of Item objects in the Room class
+        for (Equippable equippable : equip) {  // Assuming 'items' is your ArrayList of Item objects in the Room class
             if (equippable.getItemName().equals(itemName)) {
                 return equippable;
             }
@@ -104,21 +104,22 @@ public class Room {
     }
 
     public void addItem(Equippable equippable) {
-        equippables.add(equippable);
+        equip.add(equippable);
+    }
+    public void addItem(MeleeWeapon meleeWeapon){
+        
     }
 
-    public Equippable removeItem(String itemName) {
-        for (Equippable equippable : equippables) {
+    public void removeItem(String itemName) {
+        for (Equippable equippable : equip) {
             if (equippable.getItemName().equalsIgnoreCase(itemName)) {
-                equippables.remove(equippable);
-                return equippable;  // Return the removed item
+                equip.remove(equippable);
+                return;  // Return the removed item
             }
         }
-        return null;  // Item not found
     }
 
     public ArrayList<Equippable> getItems() {
-        return equippables;
+        return equip;
     }
-
 }

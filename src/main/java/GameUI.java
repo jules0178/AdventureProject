@@ -6,7 +6,12 @@ public class GameUI {
     GameInitializer gameInitializer = new GameInitializer();
 
     public void start() {
-        System.out.println("Welcome to Adventure game. Please type 'help' for instructions.");
+        System.out.println("""
+        Welcome, brave adventurer, to the realms of mystery and peril!
+        Your quest is filled with untold dangers and boundless opportunities.
+        To aid you on your journey, you may seek guidance by typing 'help'.
+        Prepare yourself, for the adventure begins now!
+        """);
 
         while (true) {
             try {
@@ -25,13 +30,13 @@ public class GameUI {
                     }
                 } else {
                     switch (choice) {
-                        case "help", "info" -> displayHelp();
-                        case "look", "observe" -> lookAround(gameInitializer.getCurrentRoom());
-                        case "health", "status" -> showHealth();
-                        case "eat", "consume" -> useFood();
-                        case "inventory" -> showInventory();
-                        case "pick up" -> pickupItems();
-                        case "drop" -> dropItems();
+                        case "help", "info", "h" -> displayHelp();
+                        case "look", "observe", "l" -> lookAround(gameInitializer.getCurrentRoom());
+                        case "health", "status", "c" -> showHealth();
+                        case "eat", "consume", "drink", "e" -> useFood();
+                        case "inventory", "i", "inv" -> showInventory();
+                        case "pick up", "add", "a" -> pickupItems();
+                        case "drop", "remove", "r" -> dropItems();
                         case "exit", "bye", "quit" -> {
                             System.out.println("Exiting Program -------- ");
                             System.exit(0);
@@ -47,15 +52,15 @@ public class GameUI {
 
     private void displayHelp() {
         System.out.println("Here are some helpful instructions:");
-        System.out.println("'Help' - Displays this help menu.");
-        System.out.println("'Look' - Shows details about the current room.");
-        System.out.println("'Health - Show Health status.");
-        System.out.println("'Inventory' - Show inventory");
-        System.out.println("'Eat' - Uses consumable");
-        System.out.println("'Pick up' - Pick up items");
-        System.out.println("'Drop' - Drop items");
+        System.out.println("'Help, Info, H' - Displays this help menu.");
+        System.out.println("'Look, Observe, L' - Shows details about the current room.");
+        System.out.println("'Health, Status, C' - Show Health status.");
+        System.out.println("'Eat, Consume, Drink, E' - Uses consumable");
+        System.out.println("'Inventory, I, Inv' - Show inventory");
+        System.out.println("'Pick Up, Add, A' - Pick up items");
+        System.out.println("'Drop, Remove, R' - Drop items");
         System.out.println("'Go + [Direction]' - Moves you in the specified direction. Valid directions are N, S, E, W.");
-        System.out.println("'Exit' - Exits the game.");
+        System.out.println("'Exit, Bye, Quit' - Exits the game.");
     }
 
     private void lookAround(Room currentRoom) {
@@ -151,5 +156,10 @@ public class GameUI {
             System.out.println("Invalid food item or not found in your inventory.");
         }
     }
+    private void equipItem() {
 
+    }
+    private void attack(){
+
+    }
 }

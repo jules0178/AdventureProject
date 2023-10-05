@@ -4,7 +4,7 @@ public class MapCreator {
         room1.addItem(new Equippable("lantern", "A lantern that emits a soft glow", 10));
         room1.addItem(new Consumable("flask", "An odd red liquid boils inside the flask", 1, -20));
         Room room2 = new Room("Room 2");
-        room2.addItem(new Equippable("sword", "Sharp weapon", 10));
+        room2.addItem(new MeleeWeapon("sword", "Sharp weapon", 3, 10));
         room2.addItem(new Consumable("apple", "Red fruit", 1, 20));
 
         Room room3 = new Room("Room 3");
@@ -12,7 +12,7 @@ public class MapCreator {
         room3.addItem(new Consumable("stale bread", "Hard and tasteless", 1, -10));
 
         Room room4 = new Room("Room 4");
-        room4.addItem(new Equippable("axe", "Can be used to break a weak door or fight enemy", 10));
+        room4.addItem(new MeleeWeapon("axe", "Can be used to break a weak door or fight enemy", 10, 10));
         room4.addItem(new Consumable("healing potion", "Restores health", 1, 30));
 
         Room room5 = new Room("Room 5");
@@ -23,6 +23,7 @@ public class MapCreator {
         Room room6 = new Room("Room 6");
         room6.addItem(new Equippable("book", "A book of knowledge", 10));
         room6.addItem(new Consumable("fresh berries", "Sweet and delicious", 1, 15));
+        room6.addItem(new RangedWeapon("crossbow", "an old tattered crossbow with a single bolt", 4, 8, 1));
 
         Room room7 = new Room("Room 7");
         room7.addItem(new Equippable("torch", "You can see better", 10));
