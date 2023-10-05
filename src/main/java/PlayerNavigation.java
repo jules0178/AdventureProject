@@ -130,7 +130,7 @@ public class PlayerNavigation {
 
             return true;
         } else {
-return false;
+            return false;
         }
     }
 
@@ -140,23 +140,24 @@ return false;
                 return equippable;
             }
         }
-return null;
+                return null;
     }
 
     public void equip(Weapon newWeapon) {
         this.equippedWeapon = newWeapon;
     }
 
-    public void attack() {
+    public boolean attack() {
         if (equippedWeapon == null) {
             System.out.println("You have no weapon equipped.");
-            return;
+            return false;
         }
         if (!equippedWeapon.canUse()) {
             System.out.println("Your weapon is out of ammunition.");
-            return;
+            return false;
         }
         equippedWeapon.use();
         System.out.println("You attacked!");
+        return true;
     }
 }

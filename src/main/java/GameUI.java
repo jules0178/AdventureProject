@@ -33,6 +33,7 @@ public class GameUI {
                         case "help", "info", "h" -> displayHelp();
                         case "look", "observe", "l" -> lookAround(gameInitializer.getCurrentRoom());
                         case "health", "status", "c" -> showHealth();
+                        case "attack", "strike", "shoot" -> attack();
                         case "eat", "consume", "drink", "e" -> useFood();
                         case "inventory", "i", "inv" -> showInventory();
                         case "pick up", "add", "a" -> pickupItems();
@@ -55,6 +56,7 @@ public class GameUI {
         System.out.println("'Help, Info, H' - Displays this help menu.");
         System.out.println("'Look, Observe, L' - Shows details about the current room.");
         System.out.println("'Health, Status, C' - Show Health status.");
+        System.out.println("'Attakc, Strike, Shoot, - Attack target:");
         System.out.println("'Eat, Consume, Drink, E' - Uses consumable");
         System.out.println("'Inventory, I, Inv' - Show inventory");
         System.out.println("'Pick Up, Add, A' - Pick up items");
@@ -160,6 +162,6 @@ public class GameUI {
 
     }
     private void attack(){
-
+        gameInitializer.performAttack();
     }
 }

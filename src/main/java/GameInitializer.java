@@ -48,4 +48,7 @@ public class GameInitializer {
     public boolean useFood(String foodName) {
         return playerNavigation.useFood(foodName);
     }
+    public boolean performAttack() {
+        return playerNavigation.attack();
+    }
 }
