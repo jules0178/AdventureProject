@@ -2,7 +2,6 @@ public class MapCreator {
     public Room buildMap() {
         Room room1 = new Room("Room 1");
         room1.addItem(new Item("lantern", "A lantern that emits a soft glow", 10));
-        room1.addItem(new RangedWeapon("crossbow", "an old tattered crossbow with a single bolt", 4, 8, 1));
         room1.addItem(new Food("flask", "An odd red liquid boils inside the flask", 1, -20));
 
         Room room2 = new Room("Room 2");
@@ -33,6 +32,7 @@ public class MapCreator {
 
         Room room8 = new Room("Room 8");
         room8.addItem(new Item("painting", "A beautiful masterpiece", 10));
+        room8.addItem(new RangedWeapon("musket", "An old musket with a single shot", 6, 12, 1));
         room8.addItem(new Food("honey cake", "Delicious and energizing", 1, 25));
 
         Room room9 = new Room("Room 9");
