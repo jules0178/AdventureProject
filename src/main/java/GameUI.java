@@ -37,6 +37,7 @@ public class GameUI {
                         case "eat", "consume", "drink", "e" -> useFood();
                         case "inventory", "i", "inv" -> showInventory();
                         case "equip", "handle", "q" -> equipItem();
+                        case "unequip", "u" -> unequip();
                         case "pick up", "add", "p" -> pickupItems();
                         case "drop", "remove", "r" -> dropItems();
                         case "exit", "bye", "quit" -> {
@@ -57,7 +58,9 @@ public class GameUI {
         System.out.println("'Help, Info, H' - Displays this help menu.");
         System.out.println("'Look, Observe, L' - Shows details about the current room.");
         System.out.println("'Health, Status, C' - Show Health status.");
-        System.out.println("'Attakc, Strike, Shoot, - Attack target:");
+        System.out.println("'Attack, Strike, Shoot, - Attack target:");
+        System.out.println("'Unequip' - Unequips current weapon");
+        System.out.println("'Equip' - Equip a weapon");
         System.out.println("'Eat, Consume, Drink, E' - Uses consumable");
         System.out.println("'Inventory, I, Inv' - Show inventory");
         System.out.println("'Pick Up, Add, A' - Pick up items");
@@ -160,17 +163,21 @@ public class GameUI {
         }
     }
     private void equipItem() {
+        System.out.println("Current inventory: " + adventure.getInventory());
         System.out.print("Enter the name of the item you want to equip: ");
         String weaponName = keyboard.nextLine().trim();
-        boolean success = adventure.equipItem(weaponName);
 
-        if (success) {
-            System.out.println(weaponName + " has been equipped.");
+        if (adventure.weaponExistsInInventory(weaponName)) {
+            String equipMessage = adventure.equipItem(weaponName);
+            System.out.println(equipMessage);
         } else {
             System.out.println("Item not found in your inventory or cannot be equipped.");
         }
     }
     private void attack(){
         adventure.performAttack();
+    }
+    private void unequip(){
+        adventure.unequip();
     }
 }

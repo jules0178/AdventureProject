@@ -9,11 +9,13 @@ public class Room {
     private Room east;
     private Room west;
     private ArrayList<Item> equip;
+    private ArrayList<Enemy> enemies;
 
     public Room(String n) {
         this.name = n;
         this.description = generateRandomDescription();
         this.equip = new ArrayList<>();
+        this.enemies = new ArrayList<>();
     }
 
     private String generateRandomDescription() {
@@ -118,5 +120,20 @@ public class Room {
 
     public ArrayList<Item> getItems() {
         return equip;
+    }
+    public void addWeapon(Weapon weapon) {
+        equip.add(weapon);
+    }
+
+    public void addEnemy(Enemy enemy) {
+        enemies.add(enemy);
+    }
+
+    public void removeEnemy(Enemy enemy) {
+        enemies.remove(enemy);
+    }
+
+    public ArrayList<Enemy> getEnemies() {
+        return enemies;
     }
 }

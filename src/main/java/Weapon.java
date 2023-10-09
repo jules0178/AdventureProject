@@ -10,8 +10,10 @@ public class Weapon extends Item {
         return true;
     }
 
-    public void use() {
+    public void use() {}
 
+    public int getDamage() {
+        return damage;
     }
 }
 

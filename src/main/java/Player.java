@@ -10,7 +10,7 @@ public class Player {
 
     public Player(Room startRoom, int carryingWeight) {
         this.currentRoom = startRoom;
-        this.health = 10;
+        this.health = 100;
         this.maxCarryWeight = 30;
         this.carryingWeight = carryingWeight;
     }
@@ -142,26 +142,48 @@ public class Player {
         }
                 return null;
     }
+    public void unequip() {
+        if (equippedWeapon != null) {
+            equippedWeapon = null;
+            System.out.println("Weapon has been unequipped");
+        }else{
+            System.out.println("No weapon is equipped");
+        }
 
-    public boolean equip(String findWeapon) {
+    }
+
+    public boolean weaponExistsInInventory(String weaponName) {
+        for (Item item : inventory) {
+            if (item.getItemName().equalsIgnoreCase(weaponName) && item instanceof Weapon) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public String equip(String findWeapon) {
         Weapon weaponToEquip = findWeaponByName(findWeapon);
 
         if (weaponToEquip != null) {
+            if (equippedWeapon != null) {
+                unequip();
+            }
             equippedWeapon = weaponToEquip;
-            return true;
+            return findWeapon + " has been equipped.";
         } else {
-            return false; // Return false, if weapon is not in the players inventory
+            return "Item not found in your inventory or cannot be equipped.";
         }
     }
 
     private Weapon findWeaponByName(String findWeapon) {
+        System.out.println("Searching for weapon: " + findWeapon); // Debugging line
         for (Item item : inventory) {
+            System.out.println("Checking item: " + item.getItemName()); // Debugging line
             if (item.getItemName().equalsIgnoreCase(findWeapon) && item instanceof Weapon) {
                 return (Weapon) item;
             }
         }
         return null;
-
     }
     public boolean attack() {
         if (equippedWeapon == null) {

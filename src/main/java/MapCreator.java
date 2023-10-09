@@ -1,4 +1,4 @@
-public class MapCreator {
+public class MapCreator{
     public Room buildMap() {
         Room room1 = new Room("Room 1");
         room1.addItem(new Item("lantern", "A lantern that emits a soft glow", 10));
@@ -13,14 +13,29 @@ public class MapCreator {
         room3.addItem(new Item("key", "Unlocks a locked door", 10));
         room3.addItem(new Food("stale bread", "Hard and tasteless", 1, -10));
 
+        // Adding a goblin enemy with a dagger
+        Weapon goblinWeapon = new Weapon("dagger", "A rusty old dagger", 1, 3);
+        Enemy goblin = new Enemy("Goblin", "An ugly small green creature", 10, goblinWeapon, room3, false);
+        room3.addEnemy(goblin);
+
         Room room4 = new Room("Room 4");
         room4.addItem(new MeleeWeapon("axe", "Can be used to break a weak door or fight enemy", 10, 10));
         room4.addItem(new Food("healing potion", "Restores health", 1, 30));
+
+        // Adding a troll enemy with a club
+        Weapon trollWeapon = new Weapon("club", "A large wooden club", 15, 15);
+        Enemy troll = new Enemy("Troll", "A menacing troll with a big club", 15, trollWeapon, room4, false);
+        room4.addEnemy(troll);
 
         Room room5 = new Room("Room 5");
         room5.setDescription("A glorious room filled with treasure and wonders beyond imagination");
         room5.addItem(new Item("treasure", "You have won, you are rich", 10));
         room5.addItem(new Food("cursed amulet", "A mysterious amulet with a dark aura", 1, -50));
+
+        // Adding a dragon boss guarding the treasure
+        Weapon dragonWeapon = new Weapon("fire breath", "The fiery breath of a fearsome dragon", 30, 30);
+        Enemy dragonBoss = new Enemy("Dragon", "A colossal dragon guarding the treasure", 100, dragonWeapon, room5, true);
+        room5.addEnemy(dragonBoss);
 
         Room room6 = new Room("Room 6");
         room6.addItem(new Item("book", "A book of knowledge", 10));
@@ -42,6 +57,10 @@ public class MapCreator {
         Room room10 = new Room("Room 10");
         room10.addItem(new Item("potion", "A mysterious potion", 10));
         room10.addItem(new Food("moldy cheese", "Moldy and disgusting", 1, -5));
+
+        // Adding a ghost enemy with a haunting presence
+        Enemy ghost = new Enemy("Ghost", "A spooky ghost with a haunting presence", 5, null, room10, false);
+        room10.addEnemy(ghost);
 
         Room room11 = new Room("Room 11");
         room11.addItem(new Item("shield", "Protective shield", 10));

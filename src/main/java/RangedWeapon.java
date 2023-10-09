@@ -5,17 +5,17 @@ public class RangedWeapon extends Weapon {
         super(name, description, weight, damage);
         this.remainingShots = remainingShots;
     }
-
-    @Override
+@Override
     public boolean canUse() {
         return remainingShots > 0;
     }
-
-    @Override
+@Override
     public void use() {
         if (canUse()) {
+            System.out.println("You used a ranged weapon");
             remainingShots--;
-
+        }else {
+            System.out.println("No remaining shots.");
         }
     }
 }

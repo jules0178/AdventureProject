@@ -49,10 +49,17 @@ public class Adventure {
         return player.useFood(foodName);
     }
 
-    public boolean equipItem(String weaponName) {
+    public String equipItem(String weaponName) {
         return player.equip(weaponName);
     }
-    public boolean performAttack() {
-        return player.attack();
+
+    public boolean weaponExistsInInventory(String weaponName) {
+        return player.weaponExistsInInventory(weaponName);
+    }
+    public void performAttack() {
+        player.attack();
+    }
+    public void unequip(){
+        player.unequip();
     }
 }
