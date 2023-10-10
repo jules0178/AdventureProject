@@ -185,9 +185,9 @@ public class Player {
     }
 
     private Weapon findWeaponByName(String findWeapon) {
-        System.out.println("Searching for weapon: " + findWeapon); // Debugging line
+        System.out.println("Searching for weapon: " + findWeapon);
         for (Item item : inventory) {
-            System.out.println("Checking item: " + item.getItemName()); // Debugging line
+            System.out.println("Checking item: " + item.getItemName());
             if (item.getItemName().equalsIgnoreCase(findWeapon) && item instanceof Weapon) {
                 return (Weapon) item;
             }
