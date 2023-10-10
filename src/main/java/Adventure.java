@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class Adventure {
-    private Player player;
+    private final Player player;
 
     public Adventure() {
         MapCreator gameMapCreator = new MapCreator();
@@ -56,9 +56,11 @@ public class Adventure {
     public boolean weaponExistsInInventory(String weaponName) {
         return player.weaponExistsInInventory(weaponName);
     }
-    public void performAttack() {
-        player.attack();
+    public void performAttack(String enemyName) {
+        player.attack(enemyName);
     }
+
+
     public void unequip(){
         player.unequip();
     }

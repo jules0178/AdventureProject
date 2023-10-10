@@ -21,59 +21,68 @@ public class Player {
 
     public String goDirection(String direction) {
         String result;
-        switch (direction.toLowerCase()) {
-            case "n", "north" -> {
-                if (currentRoom.getNorth() != null) {
-                    currentRoom = currentRoom.getNorth();
-                    result = "You are now in: " + currentRoom.toString();
-                } else {
-                    result = "You cannot go north from here.";
+        ArrayList<Enemy> enemiesInRoom = currentRoom.getEnemies();
+        if (!enemiesInRoom.isEmpty()) {
+            result = "There are enemies in this room. You cannot proceed";
+        } else {
+            switch (direction.toLowerCase()) {
+                case "n", "north" -> {
+                    if (currentRoom.getNorth() != null) {
+                        currentRoom = currentRoom.getNorth();
+                        result = "You are now in: " + currentRoom.toString();
+                    } else {
+                        result = "You cannot go north from here.";
+                    }
                 }
-            }
-            case "s", "south" -> {
-                if (currentRoom.getSouth() != null) {
-                    currentRoom = currentRoom.getSouth();
-                    result = "You are now in: " + currentRoom.toString();
-                } else {
-                    result = "You cannot go south from here.";
+                case "s", "south" -> {
+                    if (currentRoom.getSouth() != null) {
+                        currentRoom = currentRoom.getSouth();
+                        result = "You are now in: " + currentRoom.toString();
+                    } else {
+                        result = "You cannot go south from here.";
+                    }
                 }
-            }
-            case "w", "west" -> {
-                if (currentRoom.getWest() != null) {
-                    currentRoom = currentRoom.getWest();
-                    result = "You are now in: " + currentRoom.toString();
-                } else {
-                    result = "You cannot go west from here.";
+                case "w", "west" -> {
+                    if (currentRoom.getWest() != null) {
+                        currentRoom = currentRoom.getWest();
+                        result = "You are now in: " + currentRoom.toString();
+                    } else {
+                        result = "You cannot go west from here.";
+                    }
                 }
-            }
-            case "e", "east" -> {
-                if (currentRoom.getEast() != null) {
-                    currentRoom = currentRoom.getEast();
-                    result = "You are now in: " + currentRoom.toString();
-                } else {
-                    result = "You cannot go east from here.";
+                case "e", "east" -> {
+                    if (currentRoom.getEast() != null) {
+                        currentRoom = currentRoom.getEast();
+                        result = "You are now in: " + currentRoom.toString();
+                    } else {
+                        result = "You cannot go east from here.";
+                    }
                 }
+                default -> result = "Invalid Direction. Please try again with another.";
             }
-            default -> result = "Invalid Direction. Please try again with another.";
         }
+        currentRoom.checkForEnemies();
+
         return result;
     }
 
+
     public boolean pickUpItem(String itemName) {
-        Item item = currentRoom.findItemByName(itemName);
-        if (item != null) {
-            int totalWeight = carryingWeight + item.getWeight();
-            if (totalWeight <= maxCarryWeight) {
-                currentRoom.removeItem(item.getItemName());
-                inventory.add(item);
-                carryingWeight = totalWeight;
-                return true; // Return true, when item has been picked up
-            } else {
-                return false; // Return false, when item is too heavy to carry
+        for (Item item : currentRoom.getItems()) {
+            // Use equalsIgnoreCase for case-insensitive comparison and contains for partial matching
+            if (item.getItemName().equalsIgnoreCase(itemName) || item.getItemName().toLowerCase().contains(itemName.toLowerCase())) {
+                int totalWeight = carryingWeight + item.getWeight();
+                if (totalWeight <= maxCarryWeight) {
+                    currentRoom.removeItem(item.getItemName());
+                    inventory.add(item);
+                    carryingWeight = totalWeight;
+                    return true; // Return true, when item has been picked up
+                } else {
+                    return false; // Return false, when item is too heavy to carry
+                }
             }
-        } else {
-            return false; // Return false, when item does not exist in room
         }
+        return false; // Return false, when item does not exist in room
     }
 
     public boolean dropItem(String itemName) {
@@ -185,17 +194,55 @@ public class Player {
         }
         return null;
     }
-    public boolean attack() {
+    public void attack(String enemyName) {
         if (equippedWeapon == null) {
             System.out.println("You have no weapon equipped.");
-            return false;
+            return;
         }
         if (!equippedWeapon.canUse()) {
             System.out.println("Your weapon is out of ammunition.");
-            return false;
+            return;
         }
-        equippedWeapon.use();
-        System.out.println("You attacked!");
-        return true;
+
+        // Calculate the damage based on the equipped weapon
+        int damage = equippedWeapon.getDamage();
+
+        Enemy targetEnemy = currentRoom.findEnemyByName(enemyName);
+
+        if (targetEnemy != null) {
+            boolean isDragonBoss = targetEnemy.isDragonBoss();
+
+            while (isPlayerAlive(health) && targetEnemy.isAlive()) {
+                // Player attacks the enemy
+                System.out.println("You attack the " + targetEnemy.getName() + " with " + equippedWeapon.getName() + " for " + damage + " damage.");
+
+                // Call the enemy's hit method to apply damage
+                targetEnemy.hit(damage);
+
+                // Check if the enemy is defeated
+                if (!targetEnemy.isAlive()) {
+                    targetEnemy.dropWeapon();
+                    targetEnemy.disappear();
+                    currentRoom.removeEnemy(targetEnemy);
+                    System.out.println("You have defeated the " + targetEnemy.getName() + ".");
+                    break; // Exit the loop if the enemy is defeated
+                }
+
+                if (isDragonBoss) {
+                    // Dragon boss can attack back regardless of the player's weapon
+                    int enemyDamage = targetEnemy.enemyAttack();
+                    health -= enemyDamage;
+                    System.out.println("The " + targetEnemy.getName() + " (Dragon Boss) attacks you for " + enemyDamage + " damage.");
+
+                    // Check if the player is defeated
+                    if (!isPlayerAlive(health)) {
+                        System.out.println("You have been defeated by the " + targetEnemy.getName() + " (Dragon Boss).");
+                        break; // Exit the loop if the player is defeated
+                    }
+                }
+            }
+        } else {
+            System.out.println("There are no enemies in the room named '" + enemyName + "' to attack.");
+        }
     }
 }

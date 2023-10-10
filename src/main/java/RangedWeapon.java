@@ -13,6 +13,7 @@ public class RangedWeapon extends Weapon {
     public void use() {
         if (canUse()) {
             System.out.println("You used a ranged weapon");
+            System.out.println("Ammo remaining: " + remainingShots);
             remainingShots--;
         }else {
             System.out.println("No remaining shots.");

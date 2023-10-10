@@ -3,6 +3,7 @@ public class MapCreator{
         Room room1 = new Room("Room 1");
         room1.addItem(new Item("lantern", "A lantern that emits a soft glow", 10));
         room1.addItem(new Food("flask", "An odd red liquid boils inside the flask", 1, -20));
+        room1.addWeapon(new RangedWeapon("Bow and arrow", "wooden bowstring with a couple arrows", 2, 3, 5));
 
         Room room2 = new Room("Room 2");
         room2.addItem(new MeleeWeapon("sword", "Sharp weapon", 3, 10));
@@ -14,7 +15,7 @@ public class MapCreator{
 
         // Adding a goblin enemy with a dagger
         Weapon goblinWeapon = new Weapon("dagger", "A rusty old dagger", 1, 3);
-        Enemy goblin = new Enemy("Goblin", "An ugly small green creature", 10, goblinWeapon, room3, false);
+        Enemy goblin = new Enemy("Goblin", "an ugly small green creature", 10, goblinWeapon, room3, false);
         room3.addEnemy(goblin);
 
         Room room4 = new Room("Room 4");
@@ -23,7 +24,7 @@ public class MapCreator{
 
         // Adding a troll enemy with a club
         Weapon trollWeapon = new Weapon("club", "A large wooden club", 15, 15);
-        Enemy troll = new Enemy("Troll", "A menacing troll with a big club", 15, trollWeapon, room4, false);
+        Enemy troll = new Enemy("Troll", "a menacing troll with a big club", 15, trollWeapon, room4, false);
         room4.addEnemy(troll);
 
         Room room5 = new Room("Room 5");
@@ -32,14 +33,14 @@ public class MapCreator{
         room5.addItem(new Food("cursed amulet", "A mysterious amulet with a dark aura", 1, -50));
 
         // Adding a dragon boss guarding the treasure
-        Weapon dragonWeapon = new Weapon("fire breath", "The fiery breath of a fearsome dragon", 30, 30);
-        Enemy dragonBoss = new Enemy("Dragon", "A colossal dragon guarding the treasure", 100, dragonWeapon, room5, true);
+        Weapon dragonWeapon = new Weapon("fire breath", "The fiery breath of a fearsome dragon", 30, 101);
+        Enemy dragonBoss = new Enemy("Dragon", "A colossal dragon guarding the treasure", 15, dragonWeapon, room5, true);
         room5.addEnemy(dragonBoss);
 
         Room room6 = new Room("Room 6");
         room6.addItem(new Item("book", "A book of knowledge", 10));
         room6.addItem(new Food("fresh berries", "Sweet and delicious", 1, 15));
-        room6.addItem(new RangedWeapon("crossbow", "an old tattered crossbow with a single bolt", 4, 8, 1));
+        room6.addItem(new RangedWeapon("crossbow", "an old tattered crossbow", 4, 8, 3));
 
         Room room7 = new Room("Room 7");
         room7.addItem(new Item("torch", "You can see better", 10));

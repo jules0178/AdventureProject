@@ -121,6 +121,7 @@ public class Room {
     public ArrayList<Item> getItems() {
         return equip;
     }
+
     public void addWeapon(Weapon weapon) {
         equip.add(weapon);
     }
@@ -135,5 +136,24 @@ public class Room {
 
     public ArrayList<Enemy> getEnemies() {
         return enemies;
+    }
+
+    public void checkForEnemies() {
+        ArrayList<Enemy> enemies = getEnemies();
+        if (!enemies.isEmpty()) {
+            System.out.println("Enemies in this room:");
+            for (Enemy enemy : enemies) {
+                System.out.println("- " + enemy.getName() + ": " + enemy.getDescription() + ", Health: " + enemy.getHealth());
+            }
+        }
+    }
+
+    public Enemy findEnemyByName(String enemyName) {
+        for (Enemy enemy : enemies) {
+            if (enemy.getName().equalsIgnoreCase(enemyName)) {
+                return enemy;
+            }
+        }
+        return null; // Return null if the enemy with the specified name is not found
     }
 }

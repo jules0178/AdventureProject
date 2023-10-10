@@ -15,6 +15,14 @@ public class Enemy {
         this.isDragonBoss = isDragonBoss;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
     public int enemyAttack() {
         return equippedWeapon.getDamage();
     }
@@ -39,5 +47,12 @@ public class Enemy {
 
     public void disappear() {
         this.currentRoom.addItem(new Item("Corpse of " + this.name, "The lifeless body of " + this.description, 0));
+    }
+
+    public int getHealth() {
+        return health;
+    }
+    public boolean isDragonBoss() {
+        return isDragonBoss;
     }
 }

@@ -174,9 +174,12 @@ public class GameUI {
             System.out.println("Item not found in your inventory or cannot be equipped.");
         }
     }
-    private void attack(){
-        adventure.performAttack();
+    private void attack() {
+        System.out.print("Enter the name of the enemy you want to attack: ");
+        String enemyName = keyboard.nextLine().trim();
+        adventure.performAttack(enemyName);
     }
+
     private void unequip(){
         adventure.unequip();
     }
