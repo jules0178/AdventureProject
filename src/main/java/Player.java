@@ -199,10 +199,9 @@ public class Player {
             System.out.println("You have no weapon equipped.");
             return;
         }
-        if (!equippedWeapon.canUse()) {
-            System.out.println("Your weapon is out of ammunition.");
-            return;
-        }
+
+        // Check if the equipped weapon is ranged
+        boolean isRangedWeapon = equippedWeapon instanceof RangedWeapon;
 
         // Calculate the damage based on the equipped weapon
         int damage = equippedWeapon.getDamage();
@@ -228,15 +227,26 @@ public class Player {
                     break; // Exit the loop if the enemy is defeated
                 }
 
-                if (isDragonBoss) {
-                    // Dragon boss can attack back regardless of the player's weapon
+                if (isDragonBoss && isRangedWeapon) {
+                    // Dragon boss can retaliate with ranged attack
                     int enemyDamage = targetEnemy.enemyAttack();
                     health -= enemyDamage;
-                    System.out.println("The " + targetEnemy.getName() + " (Dragon Boss) attacks you for " + enemyDamage + " damage.");
+                    System.out.println("The " + targetEnemy.getName() + " (Dragon Boss) retaliates with a ranged attack, dealing " + enemyDamage + " damage.");
 
                     // Check if the player is defeated
                     if (!isPlayerAlive(health)) {
                         System.out.println("You have been defeated by the " + targetEnemy.getName() + " (Dragon Boss).");
+                        break; // Exit the loop if the player is defeated
+                    }
+                } else if (!isRangedWeapon) {
+                    // Enemy retaliates with a melee attack for non-ranged weapons
+                    int enemyDamage = targetEnemy.enemyAttack();
+                    health -= enemyDamage;
+                    System.out.println("The " + targetEnemy.getName() + " retaliates with a melee attack, dealing " + enemyDamage + " damage.");
+
+                    // Check if the player is defeated
+                    if (!isPlayerAlive(health)) {
+                        System.out.println("You have been defeated by the " + targetEnemy.getName() + ".");
                         break; // Exit the loop if the player is defeated
                     }
                 }
@@ -245,4 +255,5 @@ public class Player {
             System.out.println("There are no enemies in the room named '" + enemyName + "' to attack.");
         }
     }
+
 }
