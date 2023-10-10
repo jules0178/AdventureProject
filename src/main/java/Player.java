@@ -238,16 +238,14 @@ public class Player {
                         System.out.println("You have been defeated by the " + targetEnemy.getName() + " (Dragon Boss).");
                         break; // Exit the loop if the player is defeated
                     }
-                } else if (!isRangedWeapon) {
-                    // Enemy retaliates with a melee attack for non-ranged weapons
+                } else if(!isRangedWeapon){
                     int enemyDamage = targetEnemy.enemyAttack();
                     health -= enemyDamage;
-                    System.out.println("The " + targetEnemy.getName() + " retaliates with a melee attack, dealing " + enemyDamage + " damage.");
+                    System.out.println("The " + targetEnemy.getName() + " attacks you for " + enemyDamage + " damage.");
 
-                    // Check if the player is defeated
                     if (!isPlayerAlive(health)) {
-                        System.out.println("You have been defeated by the " + targetEnemy.getName() + ".");
-                        break; // Exit the loop if the player is defeated
+                        System.out.println("You have been defeated by the " + targetEnemy.getName());
+                        break;
                     }
                 }
             }

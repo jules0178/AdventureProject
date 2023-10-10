@@ -4,3 +4,5 @@ public class Main {
         ui.start();
     }
 }//Kommentar check
+}
+// hej det er et forsøg!
